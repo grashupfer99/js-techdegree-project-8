@@ -12,7 +12,7 @@ const cleanCSS = require('gulp-clean-css');
 const image = require("gulp-image");
 const browserSync = require("browser-sync").create();
 
-// Create js map, concatenate js scripts, minify, add to dist/scripts dir
+// Create js map, concatenate js scripts, minify, copy to dist/scripts dir
 gulp.task('scripts', () => {
     return gulp.src([
         'node_modules/jquery/dist/jquery.min.js',
@@ -26,8 +26,7 @@ gulp.task('scripts', () => {
         .pipe(gulp.dest('dist/scripts'))
 });
 
-
-// Create css map, sassify, minify, add to dist/styles dir
+// Create css map, sassify, minify, copy to dist/styles dir
 gulp.task('styles', () => {
     return gulp.src('sass/global.scss')
         .pipe(maps.init())
@@ -52,13 +51,13 @@ gulp.task('images', () => {
         .pipe(gulp.dest('dist/content'))
 })
 
-// Removal of designated files and directories
+// Delete all the files and folders in the dist folder
 gulp.task('clean', () => {
-    del(['dist', 'js/all*.js*', 'css/global.css*']);
+    del(['dist/*', 'dist/**/*']);
 });
 
 // Build the static website  
-gulp.task('build', ['scripts', 'styles', 'images'], () => {
+gulp.task('build', ['clean', 'scripts', 'styles', 'images'], () => {
     return gulp.src([
         'icons/*',
         'index.html'
@@ -67,6 +66,6 @@ gulp.task('build', ['scripts', 'styles', 'images'], () => {
 });
 
 // Default task
-gulp.task('default', ['clean', 'build'], ()=>{
+gulp.task('default', ['build'], ()=>{
     gulp.start('serve');
 })

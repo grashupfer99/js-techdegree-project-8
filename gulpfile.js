@@ -12,7 +12,7 @@ const cleanCSS = require('gulp-clean-css');
 const image = require("gulp-image");
 const browserSync = require("browser-sync").create();
 
-// Concatenate js scripts and create map files
+// Create js map, concatenate js scripts, minify, add to dist/scripts dir
 gulp.task('scripts', () => {
     return gulp.src([
         'node_modules/jquery/dist/jquery.min.js',
@@ -27,7 +27,7 @@ gulp.task('scripts', () => {
 });
 
 
-// css concat
+// Create css map, sassify, minify, add to dist/styles dir
 gulp.task('styles', () => {
     return gulp.src('sass/global.scss')
         .pipe(maps.init())
